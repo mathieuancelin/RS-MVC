@@ -57,10 +57,6 @@ public class View extends Renderable {
             String name = viewName;
             Throwable t = new Throwable();
             String className = t.getStackTrace()[1].getClassName();
-            String methodName = t.getStackTrace()[1].getMethodName();
-            if (this.viewName == null) {
-                name = methodName + ".html";
-            }
             className = className.substring(className.lastIndexOf(".") + 1).toLowerCase();
             name = className + "/" + name;
             String renderText = renderer.render(name, context);

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Tasks</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="${root}/public/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+        <script src="${root}/public/js/jquery-1.4.4.js" language="javascript" type="text/javascript"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header-wrapper">
+                <div id="header">
+                    <div id="logo">
+                        <h1><a href="${root}/app/todo">web-framework</a></h1>
+                        <p>the useless web framework</p>
+                    </div>
+                </div>
+            </div>
+            <div id="page">
+                <div id="page-bgtop">
+                    <div id="page-bgbtm">
+                        <div id="content">
+                            <div class="post">
+                                <h2 class="title"><a href="#">Todo list</a></h2>
+                                <div class="entry">
+                                <% if (tasks.empty) { %>
+                                    <p>No Tasks</p>
+                                <% } else { %>
+                                    <ul>
+                                        <% tasks.each { task -> %>
+                                            <li><input type="checkbox" id="${task.id}" ${task.done ? 'checked' : ''} /> ${task.title}</li>
+                                        <% } %>
+                                    </ul>
+                                <% } %>
+                                <p>
+                                    <a id="createTask" href="#">Create a new task</a>
+                                </p>
+                                <script type="text/javascript">
+                                    $('#createTask').click(function() {
+                                        $.post("${root}/app/todo/createTask", {title: prompt('task title')}, function(task) {
+                                            $('ul').prepend(
+                                                '<li><input type="checkbox" id="' + task.id + '"/>' + task.title + '</li>'
+                                            );
+                                        });
+                                    });
+                                    $('input').live('click', function() {
+                                        $.post("${root}/app/todo/change", {id: $(this).attr('id'), done: $(this).val()})
+                                    });
+                                </script>
+                                </div>
+                                <div class="byline" />
+                            </div>
+                            <div style="clear: both;">&nbsp;</div>
+                        </div>
+                        <div style="clear: both;">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

@@ -19,11 +19,7 @@ package app.model;
 
 import cx.ath.mancel01.restmvc.data.DataHelper;
 import cx.ath.mancel01.restmvc.data.Model;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task extends Model<Task> {
 
     @Transient
-    public transient static DataHelper<Task> helper = DataHelper.forType(Task.class);
+    public transient static DataHelper<Task, Long> helper = DataHelper.forType(Task.class, Long.class);
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;

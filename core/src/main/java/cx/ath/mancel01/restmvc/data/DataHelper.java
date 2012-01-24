@@ -26,18 +26,20 @@ import javax.persistence.criteria.CriteriaQuery;
  *
  * @author Mathieu ANCELIN
  */
-public class DataHelper<T> {
+public class DataHelper<T, K> {
 
     private final Class<T> clazz;
+    private final Class<K> key;
     private final String name;
 
-    private DataHelper(Class<T> clazz) {
+    private DataHelper(Class<T> clazz, Class<K> key) {
         this.clazz = clazz;
+        this.key = key;
         this.name = clazz.getSimpleName();
     }
 
-    public static <T> DataHelper<T> forType(Class<T> clazz) {
-        return new DataHelper<T>(clazz);
+    public static <T, K> DataHelper<T, K> forType(Class<T> clazz, Class<K> key) {
+        return new DataHelper<T, K>(clazz, key);
     }
 
     public List<T> all(final EntityManager em) {
@@ -59,7 +61,7 @@ public class DataHelper<T> {
         return (T) o;
     }
 
-    public T findById(final EntityManager em, Object primaryKey) {
+    public T findById(final EntityManager em, K primaryKey) {
         return em.find(clazz, primaryKey);
     }
 
@@ -85,7 +87,7 @@ public class DataHelper<T> {
         return (T) o;
     }
 
-    public T deleteById(final EntityManager em, final Long id) {
+    public T deleteById(final EntityManager em, final K id) {
         T object = findById(em, id);
         delete(em, object);
         return object;

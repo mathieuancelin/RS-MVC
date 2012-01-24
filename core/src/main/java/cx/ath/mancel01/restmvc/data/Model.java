@@ -17,27 +17,29 @@
 
 package cx.ath.mancel01.restmvc.data;
 
-import javax.persistence.EntityManager;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
+import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  *
  * @author Mathieu ANCELIN
  */
 @MappedSuperclass
-public abstract class Model<T> {
+public abstract class Model<T> implements Serializable {
     
     @Transient
     private transient DataHelper helper;
 
     @Transient
     private transient Class clazz;
+    
+    @Id @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
 
     public Model() {
         if (helper == null) {
             clazz = getClass();
-            helper = DataHelper.forType(clazz);
+            helper = DataHelper.forType(clazz, Long.class);
         }
     }
 

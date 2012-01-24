@@ -41,7 +41,7 @@ public class Todo {
 
     @GET
     public Response index() {
-        return new View("index.html")
+        return Render.view("index.html")
             .param("tasks", Task.helper.all(em))
             .render();
     }

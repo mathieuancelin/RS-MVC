@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 Mathieu ANCELIN.
+ *  Copyright 2012 Mathieu ANCELIN.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 /**
- *
+ * Context for a renderable groovy view.
+ * 
  * @author Mathieu ANCELIN
  */
 public class View extends Renderable {

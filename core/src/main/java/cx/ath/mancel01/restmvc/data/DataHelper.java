@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 Mathieu ANCELIN.
+ *  Copyright 2012 Mathieu ANCELIN.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,7 +23,8 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 /**
- *
+ * JPA helper with basic JPA requests.
+ * 
  * @author Mathieu ANCELIN
  */
 public class DataHelper<T, K> {

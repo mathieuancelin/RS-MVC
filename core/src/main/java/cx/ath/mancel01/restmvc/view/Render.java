@@ -1,5 +1,5 @@
 /*
- *  Copyright 2010 Mathieu ANCELIN.
+ *  Copyright 2012 Mathieu ANCELIN.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 /**
- *
+ * Main class to render thing from controllers.
+ * 
  * @author Mathieu ANCELIN
  */
 public class Render {
@@ -45,11 +46,19 @@ public class Render {
     }
 
     public static Response binary(String file) {
-        return Response.ok(new File(file), MediaType.APPLICATION_OCTET_STREAM).build();
+        return binary(file, MediaType.APPLICATION_OCTET_STREAM);
     }
 
     public static Response binary(File file) {
-        return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM).build();
+        return binary(file, MediaType.APPLICATION_OCTET_STREAM);
+    }
+    
+    public static Response binary(String file, String type) {
+        return Response.ok(new File(file), type).build();
+    }
+
+    public static Response binary(File file, String type) {
+        return Response.ok(file, type).build();
     }
 
     public static Response json(Object json) {
@@ -63,15 +72,13 @@ public class Render {
     public static Response notFound() {
         return Response.status(Response.Status.NOT_FOUND)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>Page not found</title></head>"
-                + "<body><h1>Page not found</h1></body></html>").build();
+            .entity(new PageDuo("Page not found").toString()).build();
     }
 
     public static Response badRequest() {
         return Response.status(Response.Status.BAD_REQUEST)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>Bad request</title></head>"
-                        + "<body><h1>Bad request</h1></body></html>").build();
+            .entity(new PageDuo("Bad request").toString()).build();
     }
 
     public static Response ok() {
@@ -81,33 +88,57 @@ public class Render {
     public static Response error() {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>Error</title></head>"
-                        + "<body><h1>Error</h1></body></html>").build();
+            .entity(new PageDuo("Error").toString()).build();
     }
 
     public static Response unavailable() {
         return Response.status(Response.Status.SERVICE_UNAVAILABLE)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>Error</title></head>"
-                        + "<body><h1>Service unavailable</h1></body></html>").build();
+            .entity(new Page("Error", "<h1>Service unavailable</h1>").toString()).build();
     }
 
     public static Response accesDenied() {
         return Response.status(Response.Status.FORBIDDEN)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>Acces denied</title></head>"
-                        + "<body><h1>Access Denied</h1></body></html>").build();
+            .entity(new PageDuo("Acces denied").toString()).build();
     }
 
     public static Response todo() {
         return Response.status(501)
             .type(MediaType.TEXT_HTML)
-            .entity("<html><head><title>TODO</title></head>"
-                        + "<body><h1>Page not yet implemented</h1></body></html>").build();
+            .entity(new Page("TODO", "<h1>Page not yet implemented</h1>").toString()).build();
     }
 
     public static View view(String name) {
         return new View(name);
     }
+    
+    static class PageDuo extends Page {
 
+        public PageDuo(String title) {
+            super(title, "<h1>" + title + "</h1>");
+        }
+    }
+    
+    static class Page {
+        private final String title;
+        private final String boody;
+
+        public Page(String title, String boody) {
+            this.title = title;
+            this.boody = boody;
+        }
+
+        @Override
+        public String toString() {
+            return "<html>"
+                    + "<head>"
+                        + "<title>" + title + "</title>"
+                    + "</head>"
+                    + "<body>"
+                        + boody
+                    + "</body>"
+                + "</html>";
+        }
+    }
 }

@@ -94,11 +94,11 @@ public class DataHelper<T, K> {
         return object;
     }
 
-    public <T> List<T> findByNamedQuery(final EntityManager em, final String namedQueryName) {
+    public List<T> findByNamedQuery(final EntityManager em, final String namedQueryName) {
         return em.createNamedQuery(namedQueryName).getResultList();
     }
 
-    public <T> List<T> findByNamedQuery(final EntityManager em, final String namedQueryName, final Object... params) {
+    public List<T> findByNamedQuery(final EntityManager em, final String namedQueryName, final Object... params) {
         Query query = em.createNamedQuery(namedQueryName);
         int i = 1;
         for (Object p : params) {
@@ -107,11 +107,11 @@ public class DataHelper<T, K> {
         return query.getResultList();
     }
 
-    public <T> T findUniqueByNamedQuery(final EntityManager em, final String namedQueryName)  {
+    public T findUniqueByNamedQuery(final EntityManager em, final String namedQueryName)  {
         return (T) em.createNamedQuery(namedQueryName).getSingleResult();
     }
 
-    public <T> T findUniqueByNamedQuery(final EntityManager em, final String namedQueryName, final Object... params) {
+    public T findUniqueByNamedQuery(final EntityManager em, final String namedQueryName, final Object... params) {
         Query query = em.createNamedQuery(namedQueryName);
         int i = 1;
         for (Object p : params) {
